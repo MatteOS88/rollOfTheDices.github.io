@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div.wrapper {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px solid black;
+            width: 220px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        div.first {
+            background-image: url(dice.png);
+            width: 107px;
+            height: 320px;
+            border: 1px solid black;
+            background-position: 0;
+        }
+
+        button.throw {
+            width: 100%;
+            background-color: white;
+            cursor: pointer;
+            transition: .4s;
+        }
+
+        button.throw:hover {
+            background-color: black;
+            color: white;
+        }
+
+        button.add {
+            width: 100%;
+            cursor: pointer;
+            background-color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <button class="add">Dodaj kość</button>
+        <button class="throw">Rzuć!</button>
+        <div class="first"></div>
+    </div>
+    <script>
+        dice = [0, (-106.67), (-213.34), (-320.01), (-426.68), (-533.35)];
+        let number = 0;
+        let diceNumber = 0;
+
+        const btn = document.querySelector('button.throw');
+        const divs = document.getElementsByClassName('first');
+        const btnAdd = document.querySelector('button.add');
+        const divWrapper = document.querySelector('div.wrapper');
+
+
+        btn.addEventListener('click', (div) => {
+            [...divs].forEach((div) => {
+                const inter = setInterval(function () {
+                    div.style.backgroundPositionX = dice[Math.floor(Math.random() * dice
+                        .length)] + "px";
+                    number++;
+                    if (number == 50) {
+                        clearInterval(inter);
+                        number = 0;
+                    }
+                }, 50);
+            });
+        });
+
+
+        function addDice() {
+            if (diceNumber < 3) {
+                const dice = document.createElement('div');
+                dice.classList.add('first');
+                divWrapper.appendChild(dice);
+                diceNumber++;
+            }
+        }
+
+        btnAdd.addEventListener('click', addDice);
+    </script>
+</body>
+
+</html>
